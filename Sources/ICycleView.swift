@@ -95,6 +95,8 @@ public class ICycleView: UIView {
     // 默认图
     open var placeholderImage: UIImage?
     
+    open var cornerRadius: CGFloat = 0
+    
     // 指示器默认颜色
     open var pageIndicatorTintColor = UIColor.white {
         didSet {
@@ -234,6 +236,7 @@ extension ICycleView: UICollectionViewDataSource, UICollectionViewDelegate {
         } else {
             // 默认Cell
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ICycleViewConst.cellIdentifier, for: indexPath) as! ICycleViewCell
+            cell.cornerRadius = cornerRadius
             cell.configureCell(picture: pictures[indexPath.item % pictures.count], placeholderImage: placeholderImage, imgViewWidth: imgViewWidth)
             return cell
         }
@@ -315,10 +318,19 @@ extension ICycleView {
 
 // MARK: - 轮播图默认的Cell
 fileprivate class ICycleViewCell: UICollectionViewCell {
-    
+
+    var cornerRadius: CGFloat = 0 {
+        didSet {
+            self.imgView.layer.cornerRadius = cornerRadius
+            self.imgView.layer.masksToBounds = true
+        }
+    }
+
     // 图片控件
     private lazy var imgView: UIImageView = {
         let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: imgViewWidth, height: bounds.height))
+        imgView.contentMode = .scaleAspectFill
+        imgView.clipsToBounds = true
         return imgView
     }()
     
