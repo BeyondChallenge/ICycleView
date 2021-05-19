@@ -148,7 +148,7 @@ public class ICycleView: UIView {
             guard pictures.count != 0 else { return }
             
             // 通过oldValue是否有值，判别页面刷新时是否需要赋值，防止每次刷新页面又从第一张图开始滚动
-            guard oldValue.count == 0 else { return }
+//             guard oldValue.count == 0 else { return }
             
             collectionView.reloadData()
             // 图片数量大于1时可以滑动
